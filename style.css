@@ -1200,7 +1200,7 @@ body {
 
 @media (max-width: 768px) {
   .flowers {
-    transform: scale(0.7);
+    transform: scale(0.8);
   }
 
   #start-overlay h1 {
@@ -1210,7 +1210,7 @@ body {
 
 @media (max-width: 480px) {
   .flowers {
-    transform: scale(0.6);
+    transform: scale(0.9);
   }
 
   #start-overlay h1 {
