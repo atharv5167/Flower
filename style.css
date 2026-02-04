@@ -983,4 +983,5 @@ body {
 }
 .not-loaded * {
   animation-play-state: paused !important;
-}
+}/ *   M o b i l e   R e s p o n s i v e n e s s   * /   @ m e d i a   ( m a x - w i d t h :   6 0 0 p x )   {   . f l o w e r s   {   t r a n s f o r m :   s c a l e ( 0 . 6 ) ;   }   # s t a r t - o v e r l a y   h 1   {   f o n t - s i z e :   1 . 5 r e m ;   t e x t - a l i g n :   c e n t e r ;   }   }  
+ 
