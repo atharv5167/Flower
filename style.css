@@ -1191,14 +1191,31 @@ body {
   animation-play-state: paused !important;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 600px) {
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .flowers {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 768px) {
+  .flowers {
+    transform: scale(0.7);
+  }
+
+  #start-overlay h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
   .flowers {
     transform: scale(0.6);
   }
 
   #start-overlay h1 {
     font-size: 1.5rem;
+    padding: 0 20px;
     text-align: center;
   }
 }
