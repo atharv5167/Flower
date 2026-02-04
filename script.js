@@ -2,39 +2,51 @@ onload = () => {
   const audio = document.getElementById("bg-music");
   const overlay = document.getElementById("start-overlay");
 
-  // Base duration of the animation sequence (approximately)
-  // Based on original CSS analysis: long-g--6 has delay 4.8s + duration 2s = 6.8s?
-  // Wait, let's re-verify the "Base" duration.
-  // The previous script doubled values. My new script wraps the *original* values if I reverted?
-  // NO, I ran the new script on top of the ALREADY DOUBLED values.
-  // So the values in file are currently "8.0s", "9.6s" etc. wrapped in calc.
-  // So the BASE duration in the file is approx 14s.
-  // I should probably set this to ~14.
+  if (!audio) {
+    console.error("Audio element not found!");
+    return;
+  }
+
+  // Explicitly set volume to ensure it's not muted
+  audio.volume = 1.0;
+
   const BASE_ANIMATION_DURATION = 14;
+
+  // Add error listener to debug loading issues
+  audio.addEventListener('error', (e) => {
+    console.error("Audio Error encountered:", e);
+    const error = audio.error;
+    let errorMessage = "Unknown Audio Error";
+    if (error) {
+      switch (error.code) {
+        case error.MEDIA_ERR_ABORTED: errorMessage = "Fetch aborted"; break;
+        case error.MEDIA_ERR_NETWORK: errorMessage = "Network error"; break;
+        case error.MEDIA_ERR_DECODE: errorMessage = "Decode error"; break;
+        case error.MEDIA_ERR_SRC_NOT_SUPPORTED: errorMessage = "Source not supported (404?)"; break;
+      }
+    }
+    alert("Audio failed to load: " + errorMessage + "\nURL: " + audio.src);
+  });
 
   const startExperience = () => {
     overlay.style.display = "none";
 
-    // Calculate scale
-    // If audio is shorter than animation, we speed up (scale < 1)
-    // If audio is longer, we slow down (scale > 1)
-    // We want animation duration = audio duration
-    // So: base * scale = audio_duration
-    // scale = audio_duration / base
-
     let scale = 1;
-    if (audio.duration) {
+    if (audio.duration && audio.duration !== Infinity) {
       scale = audio.duration / BASE_ANIMATION_DURATION;
       console.log("Audio Duration:", audio.duration);
       console.log("Calculated Scale:", scale);
       document.documentElement.style.setProperty('--speed-scale', scale);
+    } else {
+      console.warn("Audio duration not available yet, using default scale.");
     }
 
     audio.play().then(() => {
+      console.log("Audio playing successfully");
       startAnimation();
     }).catch(e => {
-      console.error("Audio play failed", e);
-      // Try to start animation anyway
+      console.error("Audio play failed error:", e);
+      alert("Audio play failed. Please interact with the document first or check console.");
       startAnimation();
     });
   };
